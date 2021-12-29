@@ -1,0 +1,25 @@
+.collections {
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: auto;
+}
+
+.CardWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+}
+
+.CardStyle {
+    height: 100%;
+    cursor: pointer;
+    width: 12rem;
+}
+
+.CardStyle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
