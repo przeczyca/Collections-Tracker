@@ -12,6 +12,16 @@ const NewCollectionModal = (props) => {
         if (newTitle !== ""){
             props.setCollections([...props.collections, {title: newTitle, text: newText}])
             props.createNewCollection()
+
+            const toSend = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ newTitle, newText })
+            }
+            fetch('http://127.0.0.1:5000/api/new_collection', toSend)
+            .catch((error) => {
+              console.error(error)
+            })
         }
         setTitle("")
         setText("")

@@ -34,4 +34,8 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# React packages
 package-lock.json
+
+# .env files
+.env

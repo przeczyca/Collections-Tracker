@@ -1,16 +1,17 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
 import Card from 'react-bootstrap/Card'
 
 import img1 from "./images/pew wall.jpg"
 
-const CollectionCard = props => {
+const ItemCard = props => {
 
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
 
     const openCollection = () => {
-        navigate(`/collection/${props.title}`)
+        console.log("asdf")
+        //navigate(`/item/${props.title}`)
     }
 
     return(
@@ -28,4 +29,4 @@ const CollectionCard = props => {
     )
 }
 
-export default CollectionCard
+export default ItemCard
