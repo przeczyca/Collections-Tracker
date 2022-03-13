@@ -4,15 +4,15 @@ import Card from 'react-bootstrap/Card'
 
 import img1 from "./images/add_new.png"
 
-const NewCollectionCard = props => {
+const NewCard = props => {
     return (
         <div className='CardStyle'>
             <Card onClick={props.onClick}>
                 <Card.Img src = {img1} />
                 <Card.Body>
-                    <Card.Title>New Collection</Card.Title>
+                    <Card.Title>New {props.cardType}</Card.Title>
                     <Card.Text>
-                        Create a new Collection
+                        Create a new {props.cardType}
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -20,4 +20,4 @@ const NewCollectionCard = props => {
     )
 }
 
-export default NewCollectionCard
+export default NewCard

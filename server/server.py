@@ -38,7 +38,7 @@ def addItem():
 
     return data
 
-#Return JSON of all items
+#Return JSON of all items in a collection
 @app.route("/api/get_items", methods = ['GET'])
 def getItems():
     return jsonify([{'title': "item1", 'text': "text1"}, {'title': "item2", 'text': "text2"}, {'title': "item3", 'text': "text3"}])

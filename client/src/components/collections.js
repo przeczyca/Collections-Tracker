@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import CollectionCard from './collectionCard'
-import NewCollectionCard from './newCollectionCard'
+import NewCard from './newCard'
 import NewCollectionModal from './newCollectionModal'
 
 import './componentStyles.css'
@@ -42,7 +42,9 @@ const Collections = () => {
                     <CollectionCard key={collection.title} title={collection.title} text={collection.text}/>
                 ))}
 
-                <NewCollectionCard onClick={() => setModalShow(true)}/>
+                <NewCard onClick={() => setModalShow(true)}
+                    cardType={"Collection"}
+                />
             </div>
             <NewCollectionModal show={modalShow} onHide={() => setModalShow(false)}
                 collections={collections}

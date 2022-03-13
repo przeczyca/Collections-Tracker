@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 import ItemCard from "./itemCard"
-import NewCollectionCard from "./newCollectionCard"
+import NewCard from "./newCard"
 
 const Collection = () => {
     const [collection, setCollection] = useState([])
@@ -40,7 +40,9 @@ const Collection = () => {
                     <ItemCard key={item.title} title={item.title} text={item.text}/>
                 ))}
 
-                <NewCollectionCard />
+                <NewCard
+                    cardType={"Item"}
+                />
             </div>
         </div>
     )
