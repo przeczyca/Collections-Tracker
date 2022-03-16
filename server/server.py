@@ -15,7 +15,7 @@ load_dotenv()
 DATABASE = os.getenv("DATABASE")
 client = pymongo.MongoClient(DATABASE) # defaults to port 27017
 db = client.collections_tracker
-users = db.users
+
 collections = db.collections
 
 #Create new collection in database with title and description
@@ -32,16 +32,18 @@ def getCollections():
     return data
 
 #Add new item to collection
-@app.route("/api/add_item", methods = ['POST'])
+@app.route("/api/add_item", methods = ['PUT'])
 def addItem():
     data = toJson(request.get_data())
-
+    collections.update_one({"title": data["collectionTitle"]}, {"$push": {"items": {"itemName": data["itemName"], "itemDescription": data["itemDescription"]}}})
     return data
 
 #Return JSON of all items in a collection
 @app.route("/api/get_items", methods = ['GET'])
 def getItems():
-    return jsonify([{'title': "item1", 'text': "text1"}, {'title': "item2", 'text': "text2"}, {'title': "item3", 'text': "text3"}])
+    collectionTitle = request.args.get("collectionTitle")
+    data = dumps(collections.find({"title": collectionTitle}, {"items": 1, "_id": 0}))
+    return data
 
 #Converts binary to json
 def toJson(data):

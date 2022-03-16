@@ -11,7 +11,7 @@ const NewCollectionModal = (props) => {
     const createNewCollection = () => {
         if (newTitle !== ""){
             props.setCollections([...props.collections, {title: newTitle, text: newText}])
-            props.createNewCollection()
+            props.collectionModalShowFalse()
 
             const toSend = {
               method: 'POST',
@@ -61,7 +61,7 @@ const NewCollectionModal = (props) => {
           
           <Modal.Footer>
             <Button onClick={props.onHide}>Cancel</Button>
-            <Button onClick={createNewCollection}>New Collection</Button>
+            <Button onClick={createNewCollection}>Add New Collection</Button>
           </Modal.Footer>
         </Modal>
     )

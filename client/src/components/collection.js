@@ -3,24 +3,23 @@ import { useParams } from "react-router-dom"
 
 import ItemCard from "./itemCard"
 import NewCard from "./newCard"
+import NewItemModal from "./newItemModal"
 
 const Collection = () => {
     const [collection, setCollection] = useState([])
+    const [modalShow, setModalShow] = useState(false)
     const {collectionTitle} = useParams()
 
-    //const collection = [{title: "item1", text: "text1"}, {title: "item2", text: "text2"}, {title: "item3", text: "text3"}]
-
     useEffect (() => {
-        fetch('http://127.0.0.1:5000/api/get_items', {method: 'GET'}).then(
+        fetch(`http://127.0.0.1:5000/api/get_items?collectionTitle=${collectionTitle}`, {method: 'GET'}).then(
             response => response.json())
         .then((data) => {
-          console.log(data)
           let collectionArr = []
-          for(let i = 0; i < data.length; i++){
-            const item = data[i]
-            const title = item.title
-            const description = item.description
-            collectionArr.push({title: title, text: description})
+          for(let i = 0; i < data[0].items.length; i++){
+            const item = data[0].items[i]
+            const name = item.itemName
+            const description = item.itemDescription
+            collectionArr.push({itemName: name, itemDescription: description})
           }
 
           setCollection(collectionArr)
@@ -29,21 +28,33 @@ const Collection = () => {
         .catch((error) => {
           console.error(error)
         })
-    },[])
+    },[collectionTitle])
 
-    //setCollection([{title: "item1", text: "text1"}, {title: "item2", text: "text2"}, {title: "item3", text: "text3"}])
+    const itemModalShowFalse = () => {
+        setModalShow(false)
+    }
+
     return (
         <div className="collections">
             <h1>{collectionTitle} Collection</h1>
             <div className='CardWrapper'>
                 {collection.map((item) => (
-                    <ItemCard key={item.title} title={item.title} text={item.text}/>
+                    <ItemCard key={item.itemName} title={item.itemName} text={item.itemDescription}/>
                 ))}
 
                 <NewCard
+                    onClick={() => setModalShow(true)}
                     cardType={"Item"}
                 />
             </div>
+            <NewItemModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                collectionTitle={collectionTitle}
+                collection={collection}
+                setCollection={setCollection}
+                itemModalShowFalse={itemModalShowFalse}
+            />
         </div>
     )
 }

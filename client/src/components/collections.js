@@ -30,7 +30,7 @@ const Collections = () => {
         })
     },[])
 
-    const createNewCollection = () => {
+    const collectionModalShowFalse = () => {
         setModalShow(false)
     }
 
@@ -42,14 +42,17 @@ const Collections = () => {
                     <CollectionCard key={collection.title} title={collection.title} text={collection.text}/>
                 ))}
 
-                <NewCard onClick={() => setModalShow(true)}
+                <NewCard
+                    onClick={() => setModalShow(true)}
                     cardType={"Collection"}
                 />
             </div>
-            <NewCollectionModal show={modalShow} onHide={() => setModalShow(false)}
+            <NewCollectionModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
                 collections={collections}
                 setCollections={setCollections}
-                createNewCollection={createNewCollection}
+                collectionModalShowFalse={collectionModalShowFalse}
             />
         </div>
     )
