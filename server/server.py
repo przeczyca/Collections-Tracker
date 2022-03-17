@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 import pymongo
 import json
@@ -29,6 +29,31 @@ def newCollection():
 @app.route("/api/get_collections", methods = ['GET'])
 def getCollections():
     data = dumps(list(collections.find()))
+    return data
+
+#Delete entire collection
+@app.route("/api/delete_collection/<collectionTitle>", methods = ['DELETE'])
+def deleteCollection(collectionTitle):
+    try:
+        dbResponse = collections.delete_one({"title":collectionTitle})
+        return Response(
+            response = json.dumps(
+                {"message":"collection deleted", "title": collectionTitle}
+            ),
+            status=200,
+            mimetype="application/json"
+        )
+
+    except Exception as ex:
+        print(ex)
+        return Response(
+            response = json.dumps(
+                {"message":"cannot delete collection"}
+            ),
+            status=500,
+            mimetype="application.json"
+        )
+    
     return data
 
 #Add new item to collection

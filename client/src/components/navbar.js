@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
@@ -7,16 +8,42 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 const CollectionNavbar = () => {
+    const location = useLocation()
+    const currentLoaction = location.pathname;
+    const path = currentLoaction.split("/")
+    const [dropdownVisible, setDropdownVisible] = useState(path[1] === "collection")
+
+    useEffect(() => {
+        setDropdownVisible(path[1] === "collection")
+    }, [path]);
+
+    const deleteCollection = () => {
+        //Make sure it is the "collection" page
+        if(path[1] === "collection"){
+            fetch(`http://127.0.0.1:5000/api/delete_collection/${path[2]}`, {method: 'DELETE'}).then(
+                response => response.json())
+            .then((data) => {
+            console.log(data)
+            
+            })
+            .catch((error) => {
+            console.error(error)
+            })
+        }
+    }
 
     return(
         <Navbar bg="dark" variant="dark">
             <Container>
             <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-            <Nav className="me-auto">
-            <DropdownButton variant="secondary" title="Options">
-                <Dropdown.Item onClick={()=>console.log("asdf")}>Action</Dropdown.Item>
-            </DropdownButton>
-            </Nav>
+                <Nav className="me-auto">
+                    {//Dropdown only visible when on collection page
+                    dropdownVisible &&
+                        <DropdownButton variant="secondary" title="Options">
+                            <Dropdown.Item onClick={() => deleteCollection()}>Action</Dropdown.Item>
+                        </DropdownButton>
+                    }
+                </Nav>
             </Container>
         </Navbar>
     )

@@ -11,8 +11,8 @@ import CollectionNavbar from './components/navbar'
 function App() {
   return (
     <div className={styles.App}>
-      <CollectionNavbar/>
       <Router>
+        <CollectionNavbar/>
         <Routes>
           <Route exact path="/" element={<Navigate to="/collections" />} />
           <Route path="/collections" element={<Collections />} />
