@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Collections from './components/collections'
 import Collection from './components/collection'
+import CollectionNavbar from './components/navbar'
 
 function App() {
   return (
     <div className={styles.App}>
+      <CollectionNavbar/>
       <Router>
         <Routes>
           <Route exact path="/" element={<Navigate to="/collections" />} />
