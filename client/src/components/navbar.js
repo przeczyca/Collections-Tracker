@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
@@ -9,6 +9,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 
 const CollectionNavbar = () => {
     const location = useLocation()
+    const navigate = useNavigate()
     const currentLoaction = location.pathname;
     const path = currentLoaction.split("/")
     const [dropdownVisible, setDropdownVisible] = useState(path[1] === "collection")
@@ -24,7 +25,7 @@ const CollectionNavbar = () => {
                 response => response.json())
             .then((data) => {
             console.log(data)
-            
+            navigate('/')
             })
             .catch((error) => {
             console.error(error)
@@ -35,7 +36,7 @@ const CollectionNavbar = () => {
     return(
         <Navbar bg="dark" variant="dark">
             <Container>
-            <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+            <Navbar.Brand href="/">Collection Tracker</Navbar.Brand>
                 <Nav className="me-auto">
                     {//Dropdown only visible when on collection page
                     dropdownVisible &&
