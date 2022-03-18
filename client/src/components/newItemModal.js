@@ -26,7 +26,6 @@ const NewItemModal = (props) => {
       }
       setItemName("")
       setItemDescription("")
-      console.log(itemName, itemDescription)
     }
 
     return (

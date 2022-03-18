@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom"
 
 import ItemCard from "./itemCard"
 import NewCard from "./newCard"
+import ItemModal from "./itemModal"
 import NewItemModal from "./newItemModal"
 
 const Collection = () => {
     const [collection, setCollection] = useState([])
+    const [selectedItem, setSelectedItem] = useState("asdf")
+    const [itemModalShow, setItemModalShow] = useState(false)
     const [newItemModalShow, setNewItemModalShow] = useState(false)
     const {collectionTitle} = useParams()
 
@@ -36,6 +39,8 @@ const Collection = () => {
             <div className='CardWrapper'>
                 {collection.map((item) => (
                     <ItemCard
+                        setItemModalShow={() => setItemModalShow(true)}
+                        setSelectedItem={() => setSelectedItem(item.itemName)}
                         key={item.itemName}
                         title={item.itemName}
                         text={item.itemDescription}
@@ -47,6 +52,13 @@ const Collection = () => {
                     cardType={"Item"}
                 />
             </div>
+
+            <ItemModal
+                show={itemModalShow}
+                onHide={() => setItemModalShow(false)}
+                itemName={selectedItem}
+            />
+
             <NewItemModal
                 show={newItemModalShow}
                 onHide={() => setNewItemModalShow(false)}

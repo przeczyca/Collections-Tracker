@@ -7,16 +7,14 @@ import img1 from "./images/pew wall.jpg"
 
 const ItemCard = props => {
 
-    //const navigate = useNavigate()
-
-    const openCollection = () => {
-        console.log("asdf")
-        //navigate(`/item/${props.title}`)
+    const showItem = () => {
+        props.setItemModalShow()
+        props.setSelectedItem()
     }
 
     return(
         <div>
-            <Card className='CardStyle' onClick={() => openCollection()}>
+            <Card className='CardStyle' onClick={() => showItem()}>
                 <Card.Img src={img1} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
