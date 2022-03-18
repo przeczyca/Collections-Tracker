@@ -7,7 +7,7 @@ import NewItemModal from "./newItemModal"
 
 const Collection = () => {
     const [collection, setCollection] = useState([])
-    const [modalShow, setModalShow] = useState(false)
+    const [newItemModalShow, setNewItemModalShow] = useState(false)
     const {collectionTitle} = useParams()
 
     useEffect (() => {
@@ -30,30 +30,29 @@ const Collection = () => {
         })
     },[collectionTitle])
 
-    const itemModalShowFalse = () => {
-        setModalShow(false)
-    }
-
     return (
         <div className="collections">
             <h1>{collectionTitle} Collection</h1>
             <div className='CardWrapper'>
                 {collection.map((item) => (
-                    <ItemCard key={item.itemName} title={item.itemName} text={item.itemDescription}/>
+                    <ItemCard
+                        key={item.itemName}
+                        title={item.itemName}
+                        text={item.itemDescription}
+                    />
                 ))}
 
                 <NewCard
-                    onClick={() => setModalShow(true)}
+                    onClick={() => setNewItemModalShow(true)}
                     cardType={"Item"}
                 />
             </div>
             <NewItemModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
+                show={newItemModalShow}
+                onHide={() => setNewItemModalShow(false)}
                 collectionTitle={collectionTitle}
                 collection={collection}
                 setCollection={setCollection}
-                itemModalShowFalse={itemModalShowFalse}
             />
         </div>
     )

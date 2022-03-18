@@ -41,7 +41,7 @@ const CollectionNavbar = () => {
                     {//Dropdown only visible when on collection page
                     dropdownVisible &&
                         <DropdownButton variant="secondary" title="Options">
-                            <Dropdown.Item onClick={() => deleteCollection()}>Action</Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteCollection()}>Delete Collection</Dropdown.Item>
                         </DropdownButton>
                     }
                 </Nav>

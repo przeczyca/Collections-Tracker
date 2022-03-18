@@ -30,10 +30,6 @@ const Collections = () => {
         })
     },[])
 
-    const collectionModalShowFalse = () => {
-        setModalShow(false)
-    }
-
     return(
         <div className={"collections"}>
             <h1>Collections</h1>
@@ -52,7 +48,6 @@ const Collections = () => {
                 onHide={() => setModalShow(false)}
                 collections={collections}
                 setCollections={setCollections}
-                collectionModalShowFalse={collectionModalShowFalse}
             />
         </div>
     )

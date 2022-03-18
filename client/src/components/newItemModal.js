@@ -11,7 +11,7 @@ const NewItemModal = (props) => {
     const createNewItem = () =>{
       if (itemName !== ""){
         props.setCollection([...props.collection, {itemName: itemName, itemDescription: itemDescription}])
-        props.itemModalShowFalse()
+        props.onHide()
         const collectionTitle = props.collectionTitle
 
         const toSend = {

@@ -11,7 +11,7 @@ const NewCollectionModal = (props) => {
     const createNewCollection = () => {
         if (newTitle !== ""){
             props.setCollections([...props.collections, {title: newTitle, text: newText}])
-            props.collectionModalShowFalse()
+            props.onHide()
 
             const toSend = {
               method: 'POST',
