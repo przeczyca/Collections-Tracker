@@ -13,7 +13,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 #MongoDB database
 load_dotenv()
 DATABASE = os.getenv("DATABASE")
-client = pymongo.MongoClient(DATABASE) # defaults to port 27017
+client = pymongo.MongoClient(DATABASE)
 db = client.collections_tracker
 
 collections = db.collections
