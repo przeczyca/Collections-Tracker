@@ -24,7 +24,6 @@ const CollectionNavbar = () => {
             fetch(`http://127.0.0.1:5000/api/delete_collection/${path[2]}`, {method: 'DELETE'}).then(
                 response => response.json())
             .then((data) => {
-            console.log(data)
             navigate('/')
             })
             .catch((error) => {

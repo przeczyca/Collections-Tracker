@@ -18,8 +18,8 @@ const Collection = () => {
             response => response.json())
         .then((data) => {
           let collectionArr = []
-          for(let i = 0; i < data[0].items.length; i++){
-            const item = data[0].items[i]
+          for(let i = 0; i < data.items.length; i++){
+            const item = data.items[i]
             const name = item.itemName
             const description = item.itemDescription
             collectionArr.push({itemName: name, itemDescription: description})

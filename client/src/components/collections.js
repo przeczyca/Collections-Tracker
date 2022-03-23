@@ -15,18 +15,19 @@ const Collections = () => {
         fetch('http://127.0.0.1:5000/api/get_collections', {method: 'GET'}).then(
             response => response.json())
         .then((data) => {
-          let collectionsArr = []
-          for(let i = 0; i < data.length; i++){
-            const collection = data[i]
-            const title = collection.title
-            const description = collection.description
-            collectionsArr.push({title: title, text: description})
-          }
+            let collectionsArr = []
+            const collectionsData = data.collections
+            for(let i = 0; i < collectionsData.length; i++){
+                const collection = collectionsData[i]
+                const title = collection.title
+                const description = collection.description
+                collectionsArr.push({title: title, text: description})
+            }
 
-          setCollections(collectionsArr)
+            setCollections(collectionsArr)
         })
         .catch((error) => {
-          console.error(error)
+            console.error(error)
         })
     },[])
 
