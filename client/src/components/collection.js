@@ -57,6 +57,8 @@ const Collection = () => {
                 show={itemModalShow}
                 onHide={() => setItemModalShow(false)}
                 itemName={selectedItem}
+                collection={collection}
+                setCollection={setCollection}
             />
 
             <NewItemModal

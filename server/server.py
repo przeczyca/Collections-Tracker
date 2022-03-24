@@ -87,8 +87,6 @@ def deleteCollection(collectionTitle):
             status=500,
             mimetype="application.json"
         )
-    
-    return data
 
 #Add new item to collection
 @app.route("/api/add_item", methods = ['PUT'])
@@ -134,6 +132,29 @@ def getItems():
             ),
             status=500,
             mimetype="application/json"
+        )
+
+#Delete item from collection
+@app.route("/api/delete_item/<collectionTitle>/<itemName>", methods=["DELETE"])
+def deleteItem(collectionTitle, itemName):
+    try:
+        dbResponse = collections.update_one({"title":collectionTitle}, {"$pull": {"items": {"itemName": itemName}}})
+        return Response(
+            response = dumps(
+                {"message":"item deleted", "collectionTitle": collectionTitle, "title": itemName}
+            ),
+            status=200,
+            mimetype="application/json"
+        )
+
+    except Exception as ex:
+        print(ex)
+        return Response(
+            response = dumps(
+                {"message":"cannot delete item"}
+            ),
+            status=500,
+            mimetype="application.json"
         )
 
 #Converts binary to json

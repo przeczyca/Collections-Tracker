@@ -10,8 +10,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 const CollectionNavbar = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const currentLoaction = location.pathname;
-    const path = currentLoaction.split("/")
+    const currentLocation = location.pathname;
+    const path = currentLocation.split("/")
     const [dropdownVisible, setDropdownVisible] = useState(path[1] === "collection")
 
     useEffect(() => {
