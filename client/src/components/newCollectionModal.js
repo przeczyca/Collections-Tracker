@@ -7,12 +7,21 @@ import Button from 'react-bootstrap/Button'
 const NewCollectionModal = (props) => {
     const [newTitle, setTitle] = useState("")
     const [newText, setText] = useState("")
+    const [titleErrorMessage, setTitleErrorMessage] = useState("")
 
+    //titleErrorMessage doesn't go back to "" when modal is closed after error
+    const containsNewTitle = () => {
+        return props.collections.some(collection => collection.title === newTitle)
+    }
+    
     const createNewCollection = () => {
-        if (newTitle !== ""){
-            props.setCollections([...props.collections, {title: newTitle, text: newText}])
-            props.onHide()
-
+        if (newTitle === ""){
+            setTitleErrorMessage("Collection title cannot be empty")
+        }
+        else if (containsNewTitle()){
+            setTitleErrorMessage("Collection already exists")
+        }
+        else{
             const toSend = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -22,6 +31,9 @@ const NewCollectionModal = (props) => {
             .catch((error) => {
               console.error(error)
             })
+            
+            props.setCollections([...props.collections, {title: newTitle, text: newText}])
+            props.onHide()
         }
         setTitle("")
         setText("")
@@ -47,6 +59,7 @@ const NewCollectionModal = (props) => {
                     placeholder = "Title"
                     onChange={(e) => {setTitle(e.target.value)}}
                 />
+                <div className="ErrorMessage">{titleErrorMessage}</div>
             </Form.Group>
 
             <Form.Group>

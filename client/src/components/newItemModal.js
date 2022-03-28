@@ -7,22 +7,34 @@ import Button from 'react-bootstrap/Button'
 const NewItemModal = (props) => {
     const [itemName, setItemName] = useState("")
     const [itemDescription, setItemDescription] = useState("")
+    const [itemNameErrorMessage, setItemNameErrorMessage] = useState("")
+
+    //titleErrorMessage doesn't go back to "" when modal is closed after error
+    const containsNewItemName = () => {
+      return props.collection.some(item => item.itemName === itemName)
+    }
 
     const createNewItem = () =>{
-      if (itemName !== ""){
-        props.setCollection([...props.collection, {itemName: itemName, itemDescription: itemDescription}])
-        props.onHide()
-        const collectionTitle = props.collectionTitle
+      if (itemName === ""){
+        setItemNameErrorMessage("Item name cannot be blank")
+      }
+      else if (containsNewItemName()){
+        setItemNameErrorMessage("Item already exists")
+      }
+      else {
+          const collectionTitle = props.collectionTitle
+          const toSend = {
+            method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ collectionTitle, itemName, itemDescription })
+          }
+          fetch('http://127.0.0.1:5000/api/add_item', toSend)
+            .catch((error) => {
+            console.error(error)
+            })
 
-        const toSend = {
-          method: 'PUT',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ collectionTitle, itemName, itemDescription })
-        }
-        fetch('http://127.0.0.1:5000/api/add_item', toSend)
-          .catch((error) => {
-          console.error(error)
-          })
+          props.setCollection([...props.collection, {itemName: itemName, itemDescription: itemDescription}])
+          props.onHide()
       }
       setItemName("")
       setItemDescription("")
@@ -48,6 +60,7 @@ const NewItemModal = (props) => {
                     placeholder = "Item Name"
                     onChange={(e) => {setItemName(e.target.value)}}
                 />
+                <div className="ErrorMessage">{itemNameErrorMessage}</div>
             </Form.Group>
             <Form.Group controlId="formFileMultiple" className="mb-3">
               <h4>Add Images</h4>
