@@ -30,19 +30,17 @@ const NewItemModal = (props) => {
           image.append('itemName', itemName)
           image.append('itemDescription', itemDescription)
 
-          console.log(images[0])
           const toSend = {
             method: 'POST',
             //headers: { 'Content-Type': 'multipart/form-data' },
             body:  image,
           }
-          console.log(toSend)
           fetch('http://127.0.0.1:5000/api/add_item', toSend)
             .catch((error) => {
             console.error(error)
             })
 
-          props.setCollection([...props.collection, {itemName: itemName, itemDescription: itemDescription}])
+          props.setCollection([...props.collection, {itemName: itemName, itemDescription: itemDescription, image: images[0]}])
           props.onHide()
       }
       setItemName("")

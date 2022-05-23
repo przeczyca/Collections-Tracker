@@ -3,19 +3,18 @@ import React from 'react'
 
 import Card from 'react-bootstrap/Card'
 
-import img1 from "./images/Collection_Image.jpg"
-
 const ItemCard = props => {
 
     const showItem = () => {
         props.setItemModalShow()
         props.setSelectedItem()
     }
+    const itemImage = typeof(props.image) === "string" ? `data:image/jpg;base64,${props.image}` : URL.createObjectURL(props.image)
 
     return(
         <div>
             <Card className='CardStyle' onClick={() => showItem()}>
-                <Card.Img className='CardImageContainer' src={img1} />
+                <Card.Img className='CardImageContainer' src={itemImage} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
                     <Card.Text>

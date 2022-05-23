@@ -17,13 +17,14 @@ const Collection = () => {
         fetch(`http://127.0.0.1:5000/api/get_items?collectionTitle=${collectionTitle}`, {method: 'GET'}).then(
             response => response.json())
         .then((data) => {
-          let collectionArr = []
-          for(let i = 0; i < data.items.length; i++){
-            const item = data.items[i]
-            const name = item.itemName
-            const description = item.itemDescription
-            collectionArr.push({itemName: name, itemDescription: description})
-          }
+            let collectionArr = []
+            for(let i = 0; i < data.items.length; i++){
+                const item = data.items[i]
+                const itemImage = data.images[i]
+                const name = item.itemName
+                const description = item.itemDescription
+                collectionArr.push({itemName: name, itemDescription: description, image: itemImage})
+            }
 
           setCollection(collectionArr)
           
@@ -44,6 +45,7 @@ const Collection = () => {
                         key={item.itemName}
                         title={item.itemName}
                         text={item.itemDescription}
+                        image={item.image}
                     />
                 ))}
 

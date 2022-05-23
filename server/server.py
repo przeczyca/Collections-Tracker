@@ -7,6 +7,8 @@ import json
 from bson.json_util import dumps
 import gridfs
 
+import codecs
+
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -102,13 +104,16 @@ def addItem():
             'itemDescription': request.form['itemDescription']
         }
         
+        imageID = fs.put(imageFile)
+
         collections.update_one(
                                 {"title": data["collectionTitle"]},
                                 {"$push":
                                     {"items":
                                         {
                                             "itemName": data["itemName"],
-                                            "itemDescription": data["itemDescription"]
+                                            "itemDescription": data["itemDescription"],
+                                            "imageID": imageID
                                         }
                                     }
                                 })
@@ -140,9 +145,16 @@ def getItems():
     try:
         collectionTitle = request.args.get("collectionTitle")
         items = collections.find({"title": collectionTitle}, {"items": 1, "_id": 0})
+        images = []
+        for item in items[0]['items']:
+            imageBytes = fs.get(item['imageID']).read()
+            base64_data = codecs.encode(imageBytes, 'base64')
+            image = base64_data.decode('utf-8')
+            images.append(image)
+        
         return Response(
             response=dumps(
-                {"message": "retrieved items", "collectionTitle": collectionTitle, "items": items[0]["items"]}
+                {"message": "retrieved items", "collectionTitle": collectionTitle, "items": items[0]["items"], 'images': images}
             )
         )
     
