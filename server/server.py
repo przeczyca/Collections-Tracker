@@ -5,6 +5,7 @@ from flask_cors import CORS
 import pymongo
 import json
 from bson.json_util import dumps
+import gridfs
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +16,7 @@ load_dotenv()
 DATABASE = os.getenv("DATABASE")
 client = pymongo.MongoClient(DATABASE)
 db = client.collections_tracker
+fs = gridfs.GridFS(db)
 
 collections = db.collections
 
@@ -89,14 +91,34 @@ def deleteCollection(collectionTitle):
         )
 
 #Add new item to collection
-@app.route("/api/add_item", methods = ['PUT'])
+@app.route("/api/add_item", methods = ['POST'])
 def addItem():
     try:
-        data = toJson(request.get_data())
-        collections.update_one({"title": data["collectionTitle"]}, {"$push": {"items": {"itemName": data["itemName"], "itemDescription": data["itemDescription"]}}})
+        imageFile = request.files['file']
+        
+        data = {
+            'collectionTitle': request.form['collectionTitle'],
+            'itemName': request.form['itemName'],
+            'itemDescription': request.form['itemDescription']
+        }
+        
+        collections.update_one(
+                                {"title": data["collectionTitle"]},
+                                {"$push":
+                                    {"items":
+                                        {
+                                            "itemName": data["itemName"],
+                                            "itemDescription": data["itemDescription"]
+                                        }
+                                    }
+                                })
         return Response(
             response=dumps(
-                {"message": "added item to collection", "collectionTitle": data["collectionTitle"], "itemName": data["itemName"]}
+                {
+                    "message": "added item to collection",
+                    "collectionTitle": data["collectionTitle"],
+                    "itemName": data["itemName"]
+                }
             ),
             status=201,
             mimetype="application/json"

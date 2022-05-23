@@ -8,6 +8,7 @@ const NewItemModal = (props) => {
     const [itemName, setItemName] = useState("")
     const [itemDescription, setItemDescription] = useState("")
     const [itemNameErrorMessage, setItemNameErrorMessage] = useState("")
+    const [images, setImages] = useState([])
 
     //titleErrorMessage doesn't go back to "" when modal is closed after error
     const containsNewItemName = () => {
@@ -23,11 +24,19 @@ const NewItemModal = (props) => {
       }
       else {
           const collectionTitle = props.collectionTitle
+          const image = new FormData()
+          image.append("file", images[0])
+          image.append('collectionTitle', collectionTitle)
+          image.append('itemName', itemName)
+          image.append('itemDescription', itemDescription)
+
+          console.log(images[0])
           const toSend = {
-            method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ collectionTitle, itemName, itemDescription })
+            method: 'POST',
+            //headers: { 'Content-Type': 'multipart/form-data' },
+            body:  image,
           }
+          console.log(toSend)
           fetch('http://127.0.0.1:5000/api/add_item', toSend)
             .catch((error) => {
             console.error(error)
@@ -64,7 +73,12 @@ const NewItemModal = (props) => {
             </Form.Group>
             <Form.Group controlId="formFileMultiple" className="mb-3">
               <h4>Add Images</h4>
-              <Form.Control type="file" multiple />
+              <Form.Control
+                type="file"
+                name="file"
+                multiple
+                onChange={(e) => {setImages(e.target.files)}}
+              />
             </Form.Group>
             <Form.Group>
                 <h4>Description</h4>
