@@ -8,7 +8,7 @@ const NewCard = props => {
     return (
         <div className='CardStyle'>
             <Card onClick={props.onClick}>
-                <Card.Img src = {img1} />
+                <Card.Img className='CardImageContainer' src = {img1} />
                 <Card.Body>
                     <Card.Title>New {props.cardType}</Card.Title>
                     <Card.Text>

@@ -20,8 +20,8 @@
 }
 
 .CardImageContainer {
-    position: relative;
-    text-align: center;
+    object-fit: cover;
+    height: 12rem;
 }
 
 .CollectionsEditButton {

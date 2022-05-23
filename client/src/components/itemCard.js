@@ -3,7 +3,7 @@ import React from 'react'
 
 import Card from 'react-bootstrap/Card'
 
-import img1 from "./images/pew wall.jpg"
+import img1 from "./images/Collection_Image.jpg"
 
 const ItemCard = props => {
 
@@ -15,7 +15,7 @@ const ItemCard = props => {
     return(
         <div>
             <Card className='CardStyle' onClick={() => showItem()}>
-                <Card.Img src={img1} />
+                <Card.Img className='CardImageContainer' src={img1} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
                     <Card.Text>
