@@ -190,7 +190,12 @@ def getItems():
 @app.route("/api/delete_item/<collectionTitle>/<itemName>", methods=["DELETE"])
 def deleteItem(collectionTitle, itemName):
     try:
+        imageIDQuery = collections.find({'title': collectionTitle}, {'items': {'$elemMatch':{'itemName': itemName}}})
+        imageID = imageIDQuery[0]['items'][0]['imageID']
+        
         dbResponse = collections.update_one({"title":collectionTitle}, {"$pull": {"items": {"itemName": itemName}}})
+        fs.delete(imageID)
+
         return Response(
             response = dumps(
                 {"message":"item deleted", "collectionTitle": collectionTitle, "title": itemName}
