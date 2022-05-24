@@ -50,10 +50,28 @@ def newCollection():
 @app.route("/api/get_collections", methods = ['GET'])
 def getCollections():
     try:
-        data = list(collections.find({}, {"items": 0}))
+        #data = list(collections.find({}, {"items": 0}))
+        data = list(collections.find({}, {"items": {'$slice': 1}}))
+        imageIDs = []
+        for collection in data:
+            imageID = 0
+            if len(collection['items']):
+                imageID = collection['items'][0]['imageID']
+            del collection['items']
+            imageIDs.append(imageID)
+        
+        images = []
+        for _id in imageIDs:
+            image = 0
+            if _id != 0:
+                imageBytes = fs.get(_id).read()
+                base64_data = codecs.encode(imageBytes, 'base64')
+                image = base64_data.decode('utf-8')
+            images.append(image)
+
         return Response(
             response=dumps(
-                {"message": "retrieved collections", "collections": data}
+                {"message": "retrieved collections", "collections": data, "images": images}
             ),
             status=200,
             mimetype="application/json"

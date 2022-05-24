@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import Card from 'react-bootstrap/Card'
 
-import img1 from "./images/Collection_Image.jpg"
+import emptyImage from "./images/Empty.png"
 
 const CollectionCard = props => {
 
@@ -12,11 +12,12 @@ const CollectionCard = props => {
     const openCollection = () => {
         navigate(`/collection/${props.title}`)
     }
+    const collectionImage = typeof(props.image) === "string" ? `data:image/jpg;base64,${props.image}` : emptyImage
 
     return(
         <div>
             <Card className='CardStyle' onClick={() => openCollection()}>
-                <Card.Img className='CardImageContainer' src={img1} />
+                <Card.Img className='CardImageContainer' src={collectionImage} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
                     <Card.Text>
