@@ -20,7 +20,7 @@
 }
 
 .CardImageContainer {
-    object-fit: cover;
+    object-fit: contain;
     height: 12rem;
 }
 
